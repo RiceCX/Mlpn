@@ -31,7 +31,7 @@ public class UdpClient extends ProtocolClient {
     }
 
     private void send() {
-        while (true) {
+        while (socket.isConnected()) {
             try {
                 if (packetBus.getPacketsToSend().isEmpty()) continue;
                 Packet<?> packet = packetBus.popPacket();

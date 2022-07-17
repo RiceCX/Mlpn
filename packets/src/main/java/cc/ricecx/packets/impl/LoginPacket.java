@@ -2,7 +2,13 @@ package cc.ricecx.packets.impl;
 
 import cc.ricecx.packets.Packet;
 import cc.ricecx.packets.Packets;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
+import java.util.Objects;
+
+@Data
+@Accessors(fluent = true)
 public class LoginPacket extends Packet<LoginPacket> {
     private String username;
 
@@ -23,12 +29,16 @@ public class LoginPacket extends Packet<LoginPacket> {
         return data;
     }
 
-    public String username() {
-        return this.username;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LoginPacket that)) return false;
+
+        return Objects.equals(username, that.username);
     }
 
-    public void username(String username) {
-        this.username = username;
+    @Override
+    public int hashCode() {
+        return username != null ? username.hashCode() : 0;
     }
-
 }
