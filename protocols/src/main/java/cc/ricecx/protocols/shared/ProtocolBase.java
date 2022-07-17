@@ -10,9 +10,7 @@ import java.util.Arrays;
 
 public abstract class ProtocolBase {
 
-    protected static final byte[] RECEIVE_SIZE = new byte[128];
-    protected static final byte[] SEND_SIZE = new byte[128];
-
+    protected static final byte[] MAX_PACKET_SIZE = new byte[128];
     protected final DatagramSocket socket;
 
     public PacketBus packetBus = new PacketBus();
@@ -24,8 +22,8 @@ public abstract class ProtocolBase {
     public void listen() {
         while (true) {
             try {
-                byte[] buf = new byte[RECEIVE_SIZE.length];
-                DatagramPacket rawPacket = new DatagramPacket(buf, RECEIVE_SIZE.length);
+                byte[] buf = new byte[MAX_PACKET_SIZE.length];
+                DatagramPacket rawPacket = new DatagramPacket(buf, MAX_PACKET_SIZE.length);
                 socket.receive(rawPacket); // packet is now written to with x amt of bytes
                 byte[] data = rawPacket.getData();
                 int packetId = data[0] & 0xFF;
@@ -49,11 +47,11 @@ public abstract class ProtocolBase {
         try {
             byte[] bytes = packet.serialize();
 
-            if (bytes.length < SEND_SIZE.length) {
-                Arrays.fill(SEND_SIZE, (byte) 0);
-                System.arraycopy(bytes, 0, SEND_SIZE, 0, bytes.length);
-                bytes = SEND_SIZE;
-            } else if (bytes.length > RECEIVE_SIZE.length) throw new RuntimeException("Packet is too large to send");
+            if (bytes.length < MAX_PACKET_SIZE.length) {
+                Arrays.fill(MAX_PACKET_SIZE, (byte) 0);
+                System.arraycopy(bytes, 0, MAX_PACKET_SIZE, 0, bytes.length);
+                bytes = MAX_PACKET_SIZE;
+            } else if (bytes.length > MAX_PACKET_SIZE.length) throw new RuntimeException("Packet is too large to send");
 
             DatagramPacket packetToSend = new DatagramPacket(bytes, bytes.length, addr);
             socket.send(packetToSend);
