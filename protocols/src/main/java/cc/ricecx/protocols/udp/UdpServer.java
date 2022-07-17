@@ -15,6 +15,7 @@ public class UdpServer extends ProtocolServer {
 
     @Override
     protected void handlePacket(Packets packet, byte[] bytes, DatagramPacket datagramPacket) {
+        // Echo back the data to the client since we're an echo server :thiemothumb:
         Packet<?> createdPacket = packet.deserialize(bytes);
         if (createdPacket == null) {
             System.err.println("Failed to deserialize packet: " + packet.getClass().getName());
