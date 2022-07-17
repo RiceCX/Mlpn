@@ -5,9 +5,6 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 
 public abstract class ProtocolClient extends ProtocolBase {
-
-
-
     protected final SocketAddress serverAddr;
 
     protected ProtocolClient(DatagramSocket socket, SocketAddress serverAddr) {

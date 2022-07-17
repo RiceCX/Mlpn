@@ -3,7 +3,6 @@ package cc.ricecx.protocols.udp;
 import cc.ricecx.packets.Packet;
 import cc.ricecx.packets.PacketHandler;
 import cc.ricecx.packets.Packets;
-import cc.ricecx.packets.impl.LoginPacket;
 import cc.ricecx.protocols.shared.ProtocolClient;
 
 import java.net.*;
@@ -17,7 +16,7 @@ public class UdpClient extends ProtocolClient {
         this.serverAddr = (InetSocketAddress) serverAddr;
     }
 
-    public void start() throws InterruptedException {
+    public void start() {
         try {
             connect();
             Thread listenThread = new Thread(this::listen);

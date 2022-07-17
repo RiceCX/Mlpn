@@ -12,11 +12,9 @@ public abstract class Packet<T extends Packet<T>> {
     public abstract byte[] serialize();
 
 
-    public static byte[] trim(byte[] bytes)
-    {
+    public static byte[] trim(byte[] bytes) {
         int i = bytes.length - 1;
-        while (i >= 0 && bytes[i] == 0)
-        {
+        while (i >= 0 && bytes[i] == 0) {
             --i;
         }
 

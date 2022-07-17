@@ -8,7 +8,7 @@ import java.net.SocketException;
 
 public class Application {
 
-    public static void main(String[] args) throws SocketException, InterruptedException {
+    public static void main(String[] args) throws SocketException, InterruptedException  {
         System.out.println("Hello World!");
         UdpClient client = new UdpClient(new InetSocketAddress("127.0.0.1", 24383));
         client.connect();
