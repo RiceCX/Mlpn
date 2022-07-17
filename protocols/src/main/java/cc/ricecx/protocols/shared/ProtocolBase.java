@@ -27,13 +27,14 @@ public abstract class ProtocolBase {
                 socket.receive(rawPacket); // packet is now written to with x amt of bytes
                 byte[] data = rawPacket.getData();
                 int packetId = data[0] & 0xFF;
-                System.out.println("Received packet: " + Packets.getById(packetId));
                 Packets packet = Packets.deserialize(packetId);
 
                 if (packet == null) {
                     System.err.println("Received unknown packet id: " + packetId);
                     continue;
                 }
+
+                System.out.println("Received packet: " + packet.name());
 
                 handlePacket(packet, data, rawPacket);
             } catch (IOException e) {
