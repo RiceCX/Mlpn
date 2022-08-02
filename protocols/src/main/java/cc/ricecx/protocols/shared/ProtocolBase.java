@@ -7,10 +7,12 @@ import cc.ricecx.protocols.udp.PacketBus;
 import java.io.IOException;
 import java.net.*;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class ProtocolBase {
 
-    protected static final byte[] MAX_PACKET_SIZE = new byte[128];
+    protected static final AtomicInteger editablePacketSize = new AtomicInteger(128);
+    protected static final byte[] MAX_PACKET_SIZE = new byte[editablePacketSize.get()];
     protected final DatagramSocket socket;
 
     public PacketBus packetBus = new PacketBus();
@@ -66,5 +68,13 @@ public abstract class ProtocolBase {
 
     public DatagramSocket getSocket() {
         return socket;
+    }
+
+    public static void setPacketSize(int size) {
+        editablePacketSize.set(size);
+    }
+
+    public static int getPacketSize() {
+        return editablePacketSize.get();
     }
 }
